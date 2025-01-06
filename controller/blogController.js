@@ -11,11 +11,11 @@ module.exports = {
       const admin = await Admin.findOne({ email });
       if (!admin) {
         return res.status(404).json({ message: "Admin not found" });
-      }
+      } 
       const isMatch = await bcrypt.compare(password, admin.password);
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid password" });
-      }
+      } 
       res.status(200).json({success:true, message: "Admin Login Successfull"});
     } catch (error) {
       console.error("Error while login ", error);
