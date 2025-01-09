@@ -7,8 +7,8 @@ const blogTwoSchema = new mongoose.Schema(
         type : String,
         required : true
     },
-    imageUrl : {
-        type : String,
+    imageFile : {
+        type : File,
         required : true
     },
     date : {

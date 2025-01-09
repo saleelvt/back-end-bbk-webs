@@ -25,7 +25,7 @@ module.exports = {
 
   createBlogTwo : async (req, res) => {
     try {
-      const { title, date, category, imageUrl, description, link, categoryLink } = req.body;
+      const { title, date, category, imageFile, description, link, categoryLink } = req.body;
 
       const isExistingTitle = await blogTwoDB.findOne({ title });
 
@@ -37,7 +37,7 @@ module.exports = {
         title,
         date,
         category,
-        imageUrl,
+        imageFile,
         description,
         link,
         categoryLink
@@ -69,7 +69,7 @@ module.exports = {
           title,
           date,
           category,
-          imageUrl,
+          imageFile,
           description,
           link,
           categoryLink
@@ -101,7 +101,6 @@ module.exports = {
       const id = req.params.id;
 
       const deleteBlog = await blogTwoDB.findByIdAndDelete(id);
-
       if (!deleteBlog) {
         res.status(404).json({ message: "Cant find blog to delete" });
       }

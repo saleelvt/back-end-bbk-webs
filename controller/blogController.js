@@ -62,7 +62,7 @@ module.exports = {
         title,
         date,
         category,
-        imageUrl,
+        imageFile,
         description,
         postLink,
         categoryLink
@@ -94,7 +94,7 @@ module.exports = {
           title,
           date,
           category,
-          imageUrl,
+          imageFile,
           description,
           postLink,
           categoryLink
