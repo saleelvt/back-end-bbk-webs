@@ -1,43 +1,38 @@
-
-const Admin= require("../model/adminModel");
-const blogDB = require("../model/blogModel");
-const bcrypt = require('bcrypt'); 
+const Admin = require("../model/adminModel");
+const Blog = require('../model/blogModel');
+const bcrypt = require("bcrypt");
 
 module.exports = {
-  adminLoginController:async (req, res)=>{
-      
-    try { 
+  adminLoginController: async (req, res) => {
+    try {
       const { email, password } = req.body;
       const admin = await Admin.findOne({ email });
       if (!admin) {
         return res.status(404).json({ message: "Admin not found" });
-      } 
+      }
       const isMatch = await bcrypt.compare(password, admin.password);
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid password" });
-      } 
-      res.status(200).json({success:true, message: "Admin Login Successfull"});
+      }
+      res.status(200)
+        .json({ success: true, message: "Admin Login Successfull" });
     } catch (error) {
       console.error("Error while login ", error);
       res.status(500).json({ message: "Something went  wronge while login" });
-    
-  }}
-,
-
-
+    }
+  },
   getBlog: async (req, res) => {
-    try {
-      const blogs = await blogDB.find();
 
+    try {
+      const blogs = await Blog.find();
       if (blogs.length === 0) {
         return res.status(404).json({ message: "blogs is Empty" });
-      }
-
+      }5
       if (!blogs) {
         return res.status(404).json({ message: "cant find any blogs" });
       }
+    
       res.status(200).json({ blogPosts: blogs });
-
     } catch (error) {
       console.error(error, "Something happend while geting the blog");
 
@@ -47,44 +42,74 @@ module.exports = {
     }
   },
 
-  createBlog: async (req, res) => {
+
+  // createBlog
+
+
+  createBlog : async (req, res) => {
     try {
 
-      console.log("this is creating the blogs and req.body is", req.body);
-      const { title, date, category, imageUrl, description, postLink, categoryLink } = req.body;
-      const isExistingTitle = await blogDB.findOne({ title });
+      console.log("Creating blog, req.body_____________:", req.body);
+      const {     title,  slug,linkText,  url, description,  imageUrl,  metaTitle,  metaDiscription,altText,} = req.body;
+      // Check if the title already exists
+      const isExistingTitle = await Blog.findOne({ title });
       if (isExistingTitle) {
-        return res.status(404).json({ message: "Blog is allready exist" });
+        return res.status(409).json({ message: "Blog already exists" });
       }
-
-    
-      const blogData = new blogDB({
+      // Create the blog entry
+      const blogData = new Blog({
         title,
-        date,
-        category,
-        imageFile,
+        slug,
+        linkText,
+        url,
         description,
-        postLink,
-        categoryLink
+        imageUrl,
+        metaTitle,
+        metaDiscription,
+        altText
       });
-
+  
+      // Save the blog to the database
       await blogData.save();
-
-      res.status(200).json({
+      res.status(201).json({
         message: "Blog created successfully",
       });
     } catch (error) {
-      console.error(error);
-
+      console.error("Error creating blog:", error.message);
       res.status(500).json({
-        message: "Somthing wrong with creating blog",
+        message: "Something went wrong with creating the blog",
       });
     }
   },
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   editBlog: async (req, res) => {
     try {
-      const { title, date, category, imageUrl, description, postLink, categoryLink } = req.body;
+      const {
+        title,
+        date,
+        category,
+        imageUrl,
+        description,
+        postLink,
+        categoryLink,
+      } = req.body;
 
       const id = req.params.id;
 
@@ -97,7 +122,7 @@ module.exports = {
           imageFile,
           description,
           postLink,
-          categoryLink
+          categoryLink,
         },
         { new: true }
       );

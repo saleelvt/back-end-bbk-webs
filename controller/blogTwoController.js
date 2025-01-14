@@ -1,8 +1,6 @@
 const blogTwoDB = require("../model/blogTwoModel");
 
 module.exports = {
-
-  
   getBlogTwo : async (req, res) => {
     try {
       const blogs = await blogTwoDB.find();

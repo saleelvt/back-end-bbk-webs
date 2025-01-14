@@ -1,18 +1,19 @@
 const express = require('express');
 const db = require('./config/db');
 const blogRouter = require('./routes/blogRoute');
-const blogTwoRouter = require('./routes/blogTwoRoute');
+
 const cors = require('cors');
 
-require('dotenv').config();
 
+
+
+require('dotenv').config();
 
 const app = express();
 app.use(cors({
   origin: '*', // Allow only your frontend              
 }));
 
- 
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
@@ -20,16 +21,13 @@ app.use(express.urlencoded({extended : true}));
 const PORT = process.env.PORT;  
 
 
-app.use('/apiTwo',blogTwoRouter);
 app.use('/api',blogRouter);
-
+// app.use('/apiTwo',blogTwoRouter);
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
-
-
 
 
 app.listen(PORT, () => {

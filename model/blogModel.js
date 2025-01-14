@@ -2,39 +2,49 @@ const mongoose = require('mongoose');
 
 
 const blogSchema = new mongoose.Schema(
-    {
-    title : {
-        type : String,
-        required : true
+  {
+    title: {
+      type: String,
+      required: true,
     },
-    imageFile : {
-        type :File,
-        required : true
+    slug: {
+      type: String,
+      required: true,
     },
-    date : {
-        type : String,
-        required : true
+    description: {
+      type: String,
+      required: true,
     },
-    category : {
-        type : String,
-        required : true
+    imageUrl: {
+      type: String, // Store the file path or URL as a string
+      required: true,
     },
-    description : {
-        type : String,
-        required : true
+    metaTitle: {
+      type: String,
+      required: true,
     },
-    postLink : {
-        type : String
+    metaDiscription: {
+      type: String,
+      required: true,
     },
-    categoryLink : {
-        type : String
-    }
-},
-{
-    timestamps : true
-}
-)
+    altText: {
+      type: String,
+      required: true,
+    },
+    linkText : {  
+      type: String,
+      required: true,
+    },
+    url : {      
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true, // Automatically add `createdAt` and `updatedAt`
+  }
+);
 
-const blog = mongoose.model('blog',blogSchema);
+const Blog = mongoose.model('Blog', blogSchema);
+module.exports = Blog;
 
-module.exports = blog;
