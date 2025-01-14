@@ -21,6 +21,7 @@ app.use(express.urlencoded({extended : true}));
 const PORT = process.env.PORT;  
 
 
+
 app.use('/api',blogRouter);
 // app.use('/apiTwo',blogTwoRouter);
 
