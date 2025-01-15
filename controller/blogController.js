@@ -51,6 +51,8 @@ module.exports = {
 
       console.log("Creating blog, req.body_____________:", req.body);
       const {     title,  slug,linkText,  url, description,  imageUrl,  metaTitle,  metaDiscription,altText,} = req.body;
+      console.log("this is my datata s of the cyberseec",  title,  slug,linkText,  url, description,  imageUrl,  metaTitle,  metaDiscription,altText,)
+      
       // Check if the title already exists
       const isExistingTitle = await Blog.findOne({ title });
       if (isExistingTitle) {

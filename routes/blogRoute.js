@@ -3,7 +3,7 @@ const routes = express.Router();
 const blogController = require("../controller/blogController");
 
 routes.get("/", (req, res) => { 
-    res.send("Welcome to Blog API");
+    res.send("Welcome to Cyberceed back-end server  Blog API : server is running ");
 });
 routes.post("/login",blogController.adminLoginController)
 routes.get("/get_blog", blogController.getBlog);
