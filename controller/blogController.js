@@ -21,6 +21,7 @@ module.exports = {
       res.status(500).json({ message: "Something went  wronge while login" });
     }
   },
+
   getBlog: async (req, res) => {
 
     try {
@@ -50,8 +51,8 @@ module.exports = {
     try {
 
       console.log("Creating blog, req.body_____________:", req.body);
-      const {     title,  slug,linkText,  url, description,  imageUrl,  metaTitle,  metaDiscription,altText,} = req.body;
-      console.log("this is my datata s of the cyberseec",  title,  slug,linkText,  url, description,  imageUrl,  metaTitle,  metaDiscription,altText,)
+      const {     title,  slug, description,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
+      console.log("this is my datata s of the cyberseec",  title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
       
       // Check if the title already exists
       const isExistingTitle = await Blog.findOne({ title });
@@ -62,12 +63,11 @@ module.exports = {
       const blogData = new Blog({
         title,
         slug,
-        linkText,
-        url,
         description,
         imageUrl,
+        formattedDescription,
         metaTitle,
-        metaDiscription,
+        metaDescription,
         altText
       });
   
