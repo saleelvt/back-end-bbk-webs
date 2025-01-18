@@ -2,6 +2,8 @@ const Admin = require("../model/adminModel");
 const Blog = require('../model/blogModel');
 const bcrypt = require("bcrypt");
 
+
+
 module.exports = {
   adminLoginController: async (req, res) => {
     try {
@@ -21,9 +23,8 @@ module.exports = {
       res.status(500).json({ message: "Something went  wronge while login" });
     }
   },
-
+  
   getBlog: async (req, res) => {
-
     try {
       const blogs = await Blog.find();
       if (blogs.length === 0) {
@@ -32,10 +33,37 @@ module.exports = {
       if (!blogs) {
         return res.status(404).json({ message: "cant find any blogs" });
       }
-    
       res.status(200).json({ blogPosts: blogs });
     } catch (error) {
       console.error(error, "Something happend while geting the blog");
+
+      res.status(500).json({
+        message: "Somthing wrong with geting blog",
+      });
+    }
+  },
+
+
+
+
+
+   getBlogById: async (req, res) => {
+    try {
+      const { slug } = req.query;
+      console.log("this si hte slug ", slug );
+      if (!slug) {
+        return res.status(400).json({ message: "Slug is required" });
+      }
+      const blogPost = await Blog.findOne({ slug });
+      console.log("this si hte slug ))))))))) datra  ", blogPost );
+
+  if (!blogPost) {
+    return res.status(404).json({ message: "Blog post not found" });
+  }
+     
+      res.status(200).json(blogPost);
+    } catch (error) {
+      console.error(error, "Something happend while fetch blogby slug ");
 
       res.status(500).json({
         message: "Somthing wrong with geting blog",
@@ -49,7 +77,6 @@ module.exports = {
 
   createBlog : async (req, res) => {
     try {
-
       console.log("Creating blog, req.body_____________:", req.body);
       const {     title,  slug, description,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
       console.log("this is my datata s of the cyberseec",  title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
@@ -71,6 +98,7 @@ module.exports = {
         altText
       });
   
+
       // Save the blog to the database
       await blogData.save();
       res.status(201).json({
