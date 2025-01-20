@@ -26,7 +26,8 @@ module.exports = {
   
   getBlog: async (req, res) => {
     try {
-      const blogs = await Blog.find();
+      const {brand } = req.query;
+      const blogs = await Blog.find({brand});
       if (blogs.length === 0) {
         return res.status(404).json({ message: "blogs is Empty" });
       }5
@@ -44,9 +45,6 @@ module.exports = {
   },
 
 
-
-
-
    getBlogById: async (req, res) => {
     try {
       const { slug } = req.query;
@@ -56,11 +54,9 @@ module.exports = {
       }
       const blogPost = await Blog.findOne({ slug });
       console.log("this si hte slug ))))))))) datra  ", blogPost );
-
   if (!blogPost) {
     return res.status(404).json({ message: "Blog post not found" });
   }
-     
       res.status(200).json(blogPost);
     } catch (error) {
       console.error(error, "Something happend while fetch blogby slug ");
@@ -78,8 +74,8 @@ module.exports = {
   createBlog : async (req, res) => {
     try {
       console.log("Creating blog, req.body_____________:", req.body);
-      const {     title,  slug, description,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
-      console.log("this is my datata s of the cyberseec",  title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
+      const {     title,  slug, description,brand,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
+      console.log("this is my datata s of the cyberseec",brand,  title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
       
       // Check if the title already exists
       const isExistingTitle = await Blog.findOne({ title });
@@ -90,6 +86,7 @@ module.exports = {
       const blogData = new Blog({
         title,
         slug,
+        brand,
         description,
         imageUrl,
         formattedDescription,
