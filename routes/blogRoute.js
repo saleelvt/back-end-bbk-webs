@@ -9,7 +9,6 @@ routes.get("/", (req, res) => {
 routes.post("/login",blogController.adminLoginController)
 routes.get("/get_blog", blogController.getBlog);
 routes.get("/get_blog_by_slug", blogController.getBlogById);
-
 routes.post("/create_blog", blogController.createBlog);
 routes.put("/edit_blog/:id", blogController.editBlog);
 routes.delete("/delete_blog/:id", blogController.deleteBlog);

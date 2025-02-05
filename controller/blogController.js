@@ -74,8 +74,8 @@ module.exports = {
   createBlog : async (req, res) => {
     try {
       console.log("Creating blog, req.body_____________:", req.body);
-      const {     title,  slug, description,brand,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
-      console.log("this is my datata s of the cyberseec",brand,  title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
+      const { title,headTitle,  slug, description,brand,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
+      console.log("this is my datata s of the cyberseec",brand,headTitle,  title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
       
       // Check if the title already exists
       const isExistingTitle = await Blog.findOne({ title });
@@ -85,6 +85,7 @@ module.exports = {
       // Create the blog entry
       const blogData = new Blog({
         title,
+        headTitle,
         slug,
         brand,
         description,
@@ -94,8 +95,6 @@ module.exports = {
         metaDescription,
         altText
       });
-  
-
       // Save the blog to the database
       await blogData.save();
       res.status(201).json({
