@@ -2,8 +2,6 @@ const Admin = require("../model/adminModel");
 const Blog = require('../model/blogModel');
 const bcrypt = require("bcrypt");
 
-
-
 module.exports = {
   adminLoginController: async (req, res) => {
     try {
@@ -23,7 +21,6 @@ module.exports = {
       res.status(500).json({ message: "Something went  wronge while login" });
     }
   },
-  
   getBlog: async (req, res) => {
     try {
       const {brand } = req.query;
@@ -37,7 +34,6 @@ module.exports = {
       res.status(200).json({ blogPosts: blogs });
     } catch (error) {
       console.error(error, "Something happend while geting the blog");
-
       res.status(500).json({
         message: "Somthing wrong with geting blog",
       });
@@ -69,13 +65,11 @@ module.exports = {
 
 
   // createBlog
-
-
   createBlog : async (req, res) => {
     try {
       console.log("Creating blog, req.body_____________:", req.body);
-      const { title,headTitle,  slug, description,brand,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
-      console.log("this is my datata s of the cyberseec",brand,headTitle,  title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
+      const { title,headTitle,  slug, description,brand,canonical,  imageUrl, formattedDescription, metaTitle,  metaDescription,altText} = req.body;
+      console.log("this is my datata s of the cyberseec",brand,headTitle, canonical, title, formattedDescription, slug, description,  imageUrl,  metaTitle,  metaDescription,altText,)
       
       // Check if the title already exists
       const isExistingTitle = await Blog.findOne({ title });
@@ -92,6 +86,7 @@ module.exports = {
         imageUrl,
         formattedDescription,
         metaTitle,
+        canonical,
         metaDescription,
         altText
       });

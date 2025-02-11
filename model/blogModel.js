@@ -13,6 +13,7 @@ const blogSchema = new mongoose.Schema(
     metaTitle: { type: String, required: true },
     metaDescription: { type: String, required: true },
     altText: { type: String, required: true },
+    canonical: { type: String, required: true },
   },
   {
     timestamps: true, // Automatically add `createdAt` and `updatedAt`
